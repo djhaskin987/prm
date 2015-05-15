@@ -23,19 +23,19 @@ class Main < Clamp::Command
   option ["-s", "--snapshot"], "COMPONENT", "Creates a snapshot of a component", :default => false
   option ["-e", "--recent"], :flag, "Snapshot the most recent unique packages", :default => false
   option ["-g", "--generate"], :flag , "[DEPRECATED 0.2.4]" do
-	  warn "WARNING: Generate option (--generate) is deprecated\n" +
-	  "This option will be removed in next stable release (0.3.0)\n"
+      warn "WARNING: Generate option (--generate) is deprecated\n" +
+      "This option will be removed in next stable release (0.3.0)\n"
   end
   option ["-k", "--gpg"], "GPG KEY",  "Sign release files with this GPG key", :default => false
 
   def execute
-	if recent? && !snapshot
-		raise "--snapshot is required for --recent\n"
-	end
+    if recent? && !snapshot
+        raise "--snapshot is required for --recent\n"
+    end
 
-	if type == "deb" && !component
-		raise "--deb option required for the --component option!"
-	end
+    if type == "deb" && !component
+        raise "--deb option required for the --component option!"
+    end
 
     r = PRM::Repo.new
     r.release = release
@@ -54,18 +54,18 @@ class Main < Clamp::Command
     unless snapshot.nil?
       r.snapshot = snapshot
     end
-	unless component.nil?
-	  r.component = component
-	end
-	if recent?
-	  r.recent = recent?
-	end
+    unless component.nil?
+      r.component = component
+    end
+    if recent?
+      r.recent = recent?
+    end
     unless directory.nil?
       r.directory = directory
     end
-	if nocache?
-		r.nocache = nocache?
-	end
+    if nocache?
+        r.nocache = nocache?
+    end
 
     r.create
   end

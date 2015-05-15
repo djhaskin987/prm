@@ -6,7 +6,7 @@ require 'digest/sha2'
 require 'erb'
 require 'find'
 require 'thread'
-require 'peach' 
+require 'peach'
 require 'aws/s3'
 require 'arr-pm'
 require File.join(File.dirname(__FILE__), 'rpm.rb')
@@ -81,7 +81,7 @@ module Debian
 
         npath = "dists/" + r + "/" + c + "/" + "binary-" + a + "/"
 
-        d = File.open(pfpath, "w+")	
+        d = File.open(pfpath, "w+")
         write_mutex = Mutex.new
 
         Dir.glob("#{fpath}*.deb").peach do |deb|
@@ -100,8 +100,8 @@ module Debian
             if deb.split("/").last.to_s == md5sum_path.split("/").last.to_s
 
             end
-            
-            if File.exists?("#{md5sum_path}") && nocache.nil? 
+
+            if File.exists?("#{md5sum_path}") && nocache.nil?
                 file = File.open(md5sum_path, 'r')
                 md5sum = file.read
                 file.close
@@ -116,7 +116,7 @@ module Debian
                 file = File.open(md5sum_path, 'r')
                 temp_md5sum = file.read
                 file.close
-                
+
                 if md5sum != temp_md5sum
                     puts "WARN: md5sum mismatch on #{deb}\n"
                 end
@@ -162,7 +162,7 @@ module Debian
             end
         }
 
-        component_ar.each do |c| 
+        component_ar.each do |c|
             arch.each do |ar|
                 unreasonable_array.each do |unr|
                     tmp_path = "#{path}/dists/#{release}/#{c}/binary-#{ar}"
@@ -216,7 +216,7 @@ module SNAP
             return
         end
 
-        release.each do |r| 
+        release.each do |r|
             time = Time.new
             now = time.strftime("%Y-%m-%d-%H-%M")
             new_snap = "#{snapname}-#{now}"
@@ -229,7 +229,7 @@ module SNAP
                 end
             end
 
-            if File.exists?("#{path}/dists/#{r}/#{snapname}") && !File.symlink?("#{path}/dists/#{r}/#{snapname}") 
+            if File.exists?("#{path}/dists/#{r}/#{snapname}") && !File.symlink?("#{path}/dists/#{r}/#{snapname}")
                 puts "Snapshot target is a filesystem, remove it or rename your snap target"
                 return
             end
